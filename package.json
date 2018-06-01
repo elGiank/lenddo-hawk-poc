@@ -4,6 +4,7 @@
   "author": "BCP Loans Team",
   "license": "ISC",
   "scripts": {
+    "dev": "nodemon app.js",
     "start": "node app.js"
   },
   "engines": {
