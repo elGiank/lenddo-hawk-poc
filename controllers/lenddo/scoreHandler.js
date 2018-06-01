@@ -1,5 +1,5 @@
-const scoreHandler = (req, res) => {
-    res.status(200).send('Score handler locked and loaded');
+const scoreHandler = (scoreData, res) => {
+    res.status(200).send({scoreData: scoreData});
 };
 
 module.exports = scoreHandler;
