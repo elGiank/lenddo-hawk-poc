@@ -1,0 +1,22 @@
+{
+  "name": "eva0-loans-lenddo-api",
+  "version": "1.0.0",
+  "author": "BCP Loans Team",
+  "license": "ISC",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=8.11.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "hawk": "^7.0.7",
+    "method-override": "^2.3.10"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
