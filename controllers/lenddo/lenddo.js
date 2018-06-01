@@ -5,6 +5,7 @@ const VerificationHandler = require('./verificationHandler');
 const DecisionHandler = require('./decisionHandler');
 const FeaturesHandler = require('./featuresHandler');
 const MultipleVerificationHandler = require('./multipleVerificationHandler');
+const UnknowRequestHandler = require('./unknowResponseHandler');
 
 router
     .get('/status', (req, res) => {
@@ -17,7 +18,8 @@ router
             new Queuer(VerificationHandler),
             new Queuer(DecisionHandler),
             new Queuer(FeaturesHandler),
-            new Queuer(MultipleVerificationHandler)
+            new Queuer(MultipleVerificationHandler),
+            new Queuer(UnknowRequestHandler) //this should be the last strategy, to validate unknow sources
         ];
 
         let strategy = strategies.find((strategy) => {
@@ -25,9 +27,7 @@ router
         });
 
         let queueResult = strategy.queue(data); //queue podria hacerse una funcion async si es necesario :D
-
         res.status(queueResult ? 200 : 400).send(queueResult);
-
 
     });
 
