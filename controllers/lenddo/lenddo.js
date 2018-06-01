@@ -5,7 +5,7 @@ const VerificationHandler = require('./verificationHandler');
 const DecisionHandler = require('./decisionHandler');
 const FeaturesHandler = require('./featuresHandler');
 const MultipleVerificationHandler = require('./multipleVerificationHandler');
-const UnknowRequestHandler = require('./unknowResponseHandler');
+const UnknowRequestHandler = require('./unknowRequestHandler');
 
 router
     .get('/status', (req, res) => {

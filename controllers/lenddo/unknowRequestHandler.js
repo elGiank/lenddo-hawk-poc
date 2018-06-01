@@ -1,4 +1,4 @@
-const unknowResponseHandler = {
+const unknowRequestHandler = {
     isApplicable: (event) => {
         return true;
     },
@@ -7,4 +7,4 @@ const unknowResponseHandler = {
     }
 };
 
-module.exports = unknowResponseHandler;
+module.exports = unknowRequestHandler;
