@@ -6,8 +6,8 @@ router
         res.send("Lenddo API locked and loaded");
     })
     .post('/', (req, res) => {
-        // let scoreData = req.body;
-        // console.log(scoreData);
+        let scoreData = req.body;
+        console.log(scoreData);
         ScoreHandler(req, res);
     });
 
