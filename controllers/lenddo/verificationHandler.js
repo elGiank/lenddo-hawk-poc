@@ -1,5 +1,10 @@
-const verificationHandler = (verificationData, res) => {
-    res.status(200).send({verificationData: verificationData});
+const verificationHandler = {
+    isApplicable: (event) => {
+        return event === 'verification_complete';
+    },
+    queue: (verificationData) => {
+        return { verificationData: verificationData } ;
+    }
 };
 
 module.exports = verificationHandler;

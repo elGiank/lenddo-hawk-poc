@@ -1,5 +1,10 @@
-const scoreHandler = (scoreData, res) => {
-    res.status(200).send({scoreData: scoreData});
+const scoreHandler = {
+    isApplicable: (event) => {
+        return event === 'scoring_complete';
+    },
+    queue: (scoreData) => {
+        return { scoreData: scoreData };
+    }
 };
 
 module.exports = scoreHandler;

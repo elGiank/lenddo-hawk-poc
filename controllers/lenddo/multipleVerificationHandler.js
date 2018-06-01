@@ -1,5 +1,10 @@
-const multipleVerificationHandler = (multipleVerificationData, res) => {
-    res.status(200).send({multipleVerificationData: multipleVerificationData});
+const multipleVerificationHandler = {
+    isApplicable: (event) => {
+        return event === 'application_multiple_verification_complete';
+    },
+    queue: (multipleVerificationData) => {
+        return { multipleVerificationData: multipleVerificationData };
+    }
 };
 
 module.exports = multipleVerificationHandler;

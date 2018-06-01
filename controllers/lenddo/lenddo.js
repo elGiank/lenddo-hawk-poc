@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const Queuer = require('../../lib/queuer');
 const ScoreHandler = require('./scoreHandler');
 const VerificationHandler = require('./verificationHandler');
 const DecisionHandler = require('./decisionHandler');
@@ -11,25 +12,23 @@ router
     })
     .post('/', (req, res) => {
         let data = req.body;
-        switch (data.event){
-            case 'scoring_complete':
-                ScoreHandler(data, res);
-                break;
-            case 'verification_complete':
-                VerificationHandler(data, res);
-                break;
-            case 'application_decision_complete':
-                DecisionHandler(data, res);
-                break;
-            case 'application_features_complete':
-                FeaturesHandler(data, res);
-                break;
-            case 'application_multiple_verification_complete':
-                MultipleVerificationHandler(data, res);
-                break;
-            default:
-                res.status(400).send();
-        }
+        let strategies = [
+            new Queuer(ScoreHandler),
+            new Queuer(VerificationHandler),
+            new Queuer(DecisionHandler),
+            new Queuer(FeaturesHandler),
+            new Queuer(MultipleVerificationHandler)
+        ];
+
+        let strategy = strategies.find((strategy) => {
+            return strategy.isApplicable(data.event);
+        });
+
+        let queueResult = strategy.queue(data); //queue podria hacerse una funcion async si es necesario :D
+
+        res.status(queueResult ? 200 : 400).send(queueResult);
+
+
     });
 
 module.exports = router;

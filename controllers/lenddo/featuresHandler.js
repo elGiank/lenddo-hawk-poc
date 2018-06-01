@@ -1,5 +1,10 @@
-const featuresHandler = (featuresData, res) => {
-    res.status(200).send({featuresData: featuresData});
+const featuresHandler = {
+    isApplicable: (event) => {
+        return event === 'application_features_complete';
+    },
+    queue: (featuresData) => {
+        return {featuresData: featuresData};
+    }
 };
 
 module.exports = featuresHandler;
