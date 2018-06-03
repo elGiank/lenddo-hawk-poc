@@ -26,9 +26,13 @@ router
             return strategy.isApplicable(data.event);
         });
 
-        let queueResult = strategy.queue(data); //queue podria hacerse una funcion async si es necesario :D
-        res.status(queueResult ? 200 : 400).send(queueResult);
-
+        strategy.queue(data)
+            .then((success) => {
+                res.status(success ? 200 : 400).send('insertoooooooo');
+            })
+            .catch(() => {
+                res.status(400).send('falloooooo');
+            });
     });
 
 module.exports = router;

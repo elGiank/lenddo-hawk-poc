@@ -7,20 +7,16 @@ class LenddoQueue {
     }
 
     save() {
-        //change this function to return a promise or set this as an await/async function
-
         let sql = 'INSERT INTO lenddoqueue SET ?';
         let data = {dni: this.dni, score: this.score};
 
-        db.query(sql, data, handleSaveResult);
-
-        return true;
+        return new Promise((resolve, reject) => {
+            db.query(sql, data, (error, results) => {
+                if (error) return reject(error);
+                resolve(results.affectedRows > 0 ? true : false);
+            });
+        });
     }
-}
-
-function handleSaveResult(error, results, fields) {
-    if (error) throw error;
-    console.log('saved ' + results.affectedRows + ' rows');
 }
 
 module.exports = LenddoQueue;

@@ -6,7 +6,6 @@ const scoreHandler = { //make this a class who extends queuer which should be a 
     },
     queue: (scoreData) => {
         return new LenddoQueue(scoreData.client_id, scoreData.result.score).save();
-        //return { scoreData: scoreData };
     }
 };
 
