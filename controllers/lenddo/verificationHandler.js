@@ -3,7 +3,9 @@ const verificationHandler = {
         return event === 'verification_complete';
     },
     queue: (verificationData) => {
-        return { verificationData: verificationData } ;
+        return new Promise((resolve) => {
+            resolve({verificationData: verificationData});
+        });
     }
 };
 

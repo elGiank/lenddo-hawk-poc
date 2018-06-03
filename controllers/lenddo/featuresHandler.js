@@ -3,7 +3,9 @@ const featuresHandler = {
         return event === 'application_features_complete';
     },
     queue: (featuresData) => {
-        return {featuresData: featuresData};
+        return new Promise((resolve) => {
+            resolve({featuresData: featuresData});
+        });
     }
 };
 

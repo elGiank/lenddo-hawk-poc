@@ -3,7 +3,9 @@ const multipleVerificationHandler = {
         return event === 'application_multiple_verification_complete';
     },
     queue: (multipleVerificationData) => {
-        return { multipleVerificationData: multipleVerificationData };
+        return new Promise((resolve) => {
+            resolve({multipleVerificationData: multipleVerificationData});
+        });
     }
 };
 

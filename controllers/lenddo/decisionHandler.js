@@ -1,9 +1,11 @@
-const decisionHandler =  {
+const decisionHandler = {
     isApplicable: (event) => {
         return event === 'application_decision_complete';
     },
     queue: (decisionData) => {
-        return { decisionData: decisionData };
+        return new Promise((resolve) => {
+            resolve({decisionData: decisionData});
+        });
     }
 };
 

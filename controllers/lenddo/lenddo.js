@@ -28,7 +28,7 @@ router
 
         strategy.queue(data)
             .then((success) => {
-                res.status(success ? 200 : 400).send('insertoooooooo');
+                res.status(success ? 200 : 400).send(success);
             })
             .catch(() => {
                 res.status(400).send('falloooooo');

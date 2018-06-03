@@ -3,7 +3,9 @@ const unknowRequestHandler = {
         return true;
     },
     queue: (data) => {
-        return false;
+        return new Promise((resolve) => {
+            resolve(false);
+        });
     }
 };
 
