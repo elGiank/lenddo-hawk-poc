@@ -19,7 +19,7 @@ router
             new Queuer(DecisionHandler),
             new Queuer(FeaturesHandler),
             new Queuer(MultipleVerificationHandler),
-            new Queuer(UnknowRequestHandler) //this should be the last strategy, to validate unknow sources
+            new Queuer(UnknowRequestHandler) //this should be the last strategy, to validate unknown event types
         ];
 
         let strategy = strategies.find((strategy) => {
