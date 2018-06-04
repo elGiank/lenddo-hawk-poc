@@ -5,7 +5,6 @@ const VerificationHandler = require('./verificationHandler');
 const DecisionHandler = require('./decisionHandler');
 const FeaturesHandler = require('./featuresHandler');
 const MultipleVerificationHandler = require('./multipleVerificationHandler');
-const UnknowRequestHandler = require('./unknowRequestHandler');
 
 router
     .get('/status', (req, res) => {
@@ -18,8 +17,7 @@ router
             new Queuer(VerificationHandler),
             new Queuer(DecisionHandler),
             new Queuer(FeaturesHandler),
-            new Queuer(MultipleVerificationHandler),
-            new Queuer(UnknowRequestHandler) //this should be the last strategy, to validate unknown event types
+            new Queuer(MultipleVerificationHandler)
         ];
 
         let strategy = strategies.find((strategy) => {
