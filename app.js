@@ -13,7 +13,7 @@ const lenddoRoutes = require('./controllers/lenddo/lenddo');
 
 //Middlewares
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); // verificar si se necesita.
 app.use(methodOverride());
 app.use(cors());
 
@@ -24,7 +24,6 @@ app.use('/lenddo', payloadValidator);
 app.use('/lenddo', lenddoRoutes);
 
 // Handle 404 error, the last middleware.
-// TODO: discuss about the use of 404 or 401 when the requested url is not valid.
 app.use("*", (req, res) => {
     res.status(404).send('404');
 });
