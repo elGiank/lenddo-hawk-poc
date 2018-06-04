@@ -3,6 +3,8 @@ const cors =  require('cors');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
+const payloadValidator = require('./middleware/payloadValidator/payloadValidator');
+
 const app = express();
 const port = process.env.PORT || 8000;
 
@@ -15,6 +17,8 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(cors());
 
+//Custom middlewares
+app.use('/lenddo', payloadValidator);
 
 //Routes
 app.use('/lenddo', lenddoRoutes);

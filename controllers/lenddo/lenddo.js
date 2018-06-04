@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Queuer = require('../../lib/queuer');
+const Queuer = require('../../lib/strategys/queuer');
 const ScoreHandler = require('./scoreHandler');
 const VerificationHandler = require('./verificationHandler');
 const DecisionHandler = require('./decisionHandler');

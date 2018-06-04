@@ -11,6 +11,7 @@
     "node": ">=8.11.1"
   },
   "dependencies": {
+    "ajv": "^6.5.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
