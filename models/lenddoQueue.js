@@ -12,6 +12,7 @@ class LenddoQueue {
 
         return new Promise((resolve, reject) => {
             db.query(sql, data, (error, results) => {
+                db.end();
                 if (error) return reject(error);
                 resolve(results.affectedRows > 0);
             });
