@@ -7,11 +7,17 @@ const scoreHandler = {
         return event === 'scoring_complete';
     },
     queue: (scoreData) => {
-        let encryptedDni = getEncryptedDni(scoreData.client_id);
+        let encryptedDni = getEncryptedDni(getCustomerDni(scoreData.client_id));
         let score = scoreData.result.score;
 
         return new LenddoQueue(encryptedDni, score).save();
     }
+};
+
+const getCustomerDni = (clientId) => {
+    // assumed clientId Formatt: 12345678-78979877979
+    return clientId.substr(0, 8);
+
 };
 
 const getEncryptedDni = (dni) => {
