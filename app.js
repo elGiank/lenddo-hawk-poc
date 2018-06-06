@@ -17,7 +17,7 @@ app.use(methodOverride());
 app.use(cors());
 
 //Custom middlewares
-app.use('/lenddo', payloadValidator);
+app.post('/lenddo', payloadValidator);
 
 //Routes
 app.use('/lenddo', lenddoRoutes);
