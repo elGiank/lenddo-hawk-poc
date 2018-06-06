@@ -1,10 +1,12 @@
 const router = require('express').Router();
+const isProductionMode = require('../../lib/isProductionMode');
 const Queuer = require('../../lib/strategys/queuer');
 const ScoreHandler = require('./scoreHandler');
 const VerificationHandler = require('./verificationHandler');
 const DecisionHandler = require('./decisionHandler');
 const FeaturesHandler = require('./featuresHandler');
 const MultipleVerificationHandler = require('./multipleVerificationHandler');
+
 
 router
     .get('/status', (req, res) => {
@@ -26,10 +28,10 @@ router
 
         strategy.queue(data)
             .then((success) => {
-                res.status(success ? 200 : 400).send(success);
+                res.status(success ? 200 : 400).send(isProductionMode ? undefined : success);
             })
             .catch((err) => {
-                res.status(400).send(err);
+                res.status(400).send(isProductionMode ? undefined : err);
             });
     });
 
