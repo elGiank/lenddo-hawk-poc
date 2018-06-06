@@ -24,7 +24,7 @@ app.use('/lenddo', lenddoRoutes);
 
 // Handle 404 error, the last middleware.
 app.use("*", (req, res) => {
-    res.status(404).send('404');
+    res.status(404).send('Holiiiii :)');
 });
 
 app.listen(port, () => {
