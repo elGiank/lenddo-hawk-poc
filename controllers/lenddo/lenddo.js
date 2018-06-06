@@ -28,8 +28,8 @@ router
             .then((success) => {
                 res.status(success ? 200 : 400).send(success);
             })
-            .catch(() => {
-                res.status(400).send();
+            .catch((err) => {
+                res.status(400).send(err);
             });
     });
 
