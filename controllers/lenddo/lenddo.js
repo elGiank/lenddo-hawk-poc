@@ -26,10 +26,10 @@ router
 
         strategy.queue(data)
             .then((success) => {
-                res.status(success ? 200 : 400).send(success);
+                res.status(success ? 200 : 400).send();
             })
             .catch(() => {
-                res.status(400).send('falloooooo');
+                res.status(400).send();
             });
     });
 
