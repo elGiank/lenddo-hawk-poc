@@ -18,7 +18,6 @@ connection.connect((err) => {
 function keepAlive() {
     setInterval(() => {
         connection.ping();
-        console.log('pin to database send', Date.now());
     }, 110 * 1000);
 }
 
