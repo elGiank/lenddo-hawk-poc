@@ -22,8 +22,11 @@ const getCustomerDni = (clientId) => {
 
 const getEncryptedDni = (dni) => {
     let sum = crypto.createHash('sha256');
-    //sum.update(salt); -> TODO: when salt is avaible via arkconfig, read it here.
+    let salt = process.env.SALT || 'development';
+
+    sum.update(salt);
     sum.update(dni);
+
     return sum.digest('hex');
 };
 
