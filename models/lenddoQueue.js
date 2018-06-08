@@ -1,17 +1,21 @@
-const db = require('./connection');
-
 class LenddoQueue {
     constructor(dni, score) {
-        this.dni = dni;
+        this.dni_encrypted = dni;
         this.score = score;
     }
+}
 
-    save() {
+class LenddoQueueRepository {
+    constructor(db) {
+        this.db = db;
+    }
+
+    save(lenddoQueue) {
         let sql = 'INSERT INTO lenddo_queue SET ?';
-        let data = {dni_encrypted: this.dni, score: this.score};
+        let data = lenddoQueue || {};
 
         return new Promise((resolve, reject) => {
-            db.query(sql, data, (error, results) => {
+            this.db.query(sql, data, (error, results) => {
                 if (error) return reject(error);
                 resolve(results.affectedRows > 0);
             });
@@ -19,4 +23,4 @@ class LenddoQueue {
     }
 }
 
-module.exports = LenddoQueue;
+module.exports = {LenddoQueue, LenddoQueueRepository};

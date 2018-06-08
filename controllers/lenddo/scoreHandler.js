@@ -1,5 +1,7 @@
-const LenddoQueue = require('../../models/lenddoQueue');
+const LenddoQueueRepository = require('../../models/lenddoQueue').LenddoQueueRepository;
+const LenddoQueue =  require('../../models/lenddoQueue').LenddoQueue;
 const crypto = require('crypto');
+const db = require('../../models/connection');
 
 
 const scoreHandler = {
@@ -9,8 +11,9 @@ const scoreHandler = {
     queue: (scoreData) => {
         let encryptedDni = getEncryptedDni(getCustomerDni(scoreData.client_id));
         let score = scoreData.result.score;
+        let scoreResult = new LenddoQueue(encryptedDni, score);
 
-        return new LenddoQueue(encryptedDni, score).save();
+        return new LenddoQueueRepository(db).save(scoreResult);
     }
 };
 

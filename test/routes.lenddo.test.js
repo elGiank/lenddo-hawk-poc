@@ -32,15 +32,6 @@ describe('#GET /lenddo/status', () => {
 
 
 describe('#POST /lenddo', () => {
-    //var sandbox;
-    // beforeEach(function () {
-    //     this.sandbox = sinon.sandbox.create()
-    // });
-    //
-    // afterEach(function () {
-    //     this.sandbox.restore()
-    // });
-
     it('should queue lenddo score result', function (done) {
         this.timeout(5 * 1000);
         let payload = {
@@ -63,7 +54,6 @@ describe('#POST /lenddo', () => {
 
                 done();
             });
-
     });
 
     it('should return same sent object for lenddo verification result', function (done) {
@@ -177,7 +167,4 @@ describe('#POST /lenddo', () => {
                 done();
             });
     });
-
-
-
 });

@@ -7,6 +7,7 @@ const DecisionHandler = require('./decisionHandler');
 const FeaturesHandler = require('./featuresHandler');
 const MultipleVerificationHandler = require('./multipleVerificationHandler');
 
+
 router
     .get('/status', (req, res) => {
         res.send("Lenddo API locked and loaded");
