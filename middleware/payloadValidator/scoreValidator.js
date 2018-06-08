@@ -8,7 +8,7 @@ const schema = {
         "result": {
             "type": "object",
             "properties": {
-                "score": {  "type": "string" }
+                "score": {  "type": "string", "maxLength": 4, "minLength": 1, "pattern": "^\\d{1,4}$" }
             },
             "additionalProperties": false,
             "required": ["score"]
