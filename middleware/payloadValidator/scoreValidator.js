@@ -3,12 +3,12 @@ const ajv = new Ajv();
 
 const schema = {
     "properties": {
-        "client_id": { "type": "string" },
-        "event": { "type": "string" },
+        "client_id": {"type": "string"},
+        "event": {"type": "string"},
         "result": {
             "type": "object",
             "properties": {
-                "score": {  "type": "string", "maxLength": 4, "minLength": 1, "pattern": "^\\d{1,4}$" }
+                "score": {"type": "string", "maxLength": 4, "minLength": 1, "pattern": "^\\d{1,4}$"}
             },
             "additionalProperties": false,
             "required": ["score"]
@@ -22,7 +22,7 @@ const scoreValidator = {
     isApplicable: (event) => {
         return event === 'scoring_complete';
     },
-    isValid (payload) {
+    isValid: (payload) => {
         return ajv.validate(schema, payload);
     }
 };

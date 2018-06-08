@@ -1,5 +1,5 @@
 process.env.NODE_ENV = 'test';
-process.env.PORT = 8000;
+process.env.PORT = 8001;
 process.env.SALT = 'development';
 process.env.DB_HOST = 'lenddo-test.mysql.database.azure.com';
 process.env.DB_USER = 'lenddo@lenddo-test';
@@ -42,8 +42,8 @@ describe('#POST /lenddo', () => {
     // });
 
     it('should queue lenddo score result', function (done) {
-        this.timeout(10000);
-        let result = {
+        this.timeout(5 * 1000);
+        let payload = {
             client_id:"45784684-78979877979",
             event:"scoring_complete",
             result:{
@@ -54,35 +54,129 @@ describe('#POST /lenddo', () => {
         chai.request(server)
             .post('/lenddo')
             .set('Content-Type','application/x-www-form-urlencoded')
-            .send(result)
+            .send(payload)
             .end((err, res) => {
                 should.not.exist(err);
 
                 res.should.have.status(200);
-
-                console.log('score handler body', res.body);
-                console.log('score handler text', res.text);
+                res.text.should.be.eql('true');
 
                 done();
             });
 
     });
 
-    // it('should do nothing on lenddo verification result', (done) => {
-    //     done();
-    // });
-    //
-    // it('should do nothing on lenddo decision result', (done) => {
-    //     done();
-    // });
-    //
-    // it('should do nothing on lenddo feature result', (done) => {
-    //     done();
-    // });
-    //
-    // it('should do nothing on lenddo multiple verification result', (done) => {
-    //     done();
-    // });
+    it('should return same sent object for lenddo verification result', function (done) {
+        this.timeout(5 * 1000);
+        let payload = {
+            client_id:"12345678-78979877979",
+            event:"verification_complete",
+            result:{
+                whatever:"whatever"
+            }
+        };
+
+        let response = {
+            verificationData : payload
+        };
+
+        chai.request(server)
+            .post('/lenddo')
+            .set('Content-Type','application/x-www-form-urlencoded')
+            .send(payload)
+            .end((err, res) => {
+                should.not.exist(err);
+
+                res.should.have.status(200);
+                res.body.should.be.eql(response);
+
+                done();
+            });
+    });
+
+    it('should return same sent object for lenddo decision result', function (done) {
+        this.timeout(5 * 1000);
+        let payload = {
+            client_id:"12345678-78979877979",
+            event:"application_decision_complete",
+            result:{
+                whatever:"whatever"
+            }
+        };
+
+        let response = {
+            decisionData : payload
+        };
+
+        chai.request(server)
+            .post('/lenddo')
+            .set('Content-Type','application/x-www-form-urlencoded')
+            .send(payload)
+            .end((err, res) => {
+                should.not.exist(err);
+
+                res.should.have.status(200);
+                res.body.should.be.eql(response);
+
+                done();
+            });
+    });
+
+    it('should return same sent object for lenddo feature result', function (done) {
+        this.timeout(5 * 1000);
+        let payload = {
+            client_id:"12345678-78979877979",
+            event:"application_features_complete",
+            result:{
+                whatever:"whatever"
+            }
+        };
+
+        let response = {
+            featuresData : payload
+        };
+
+        chai.request(server)
+            .post('/lenddo')
+            .set('Content-Type','application/x-www-form-urlencoded')
+            .send(payload)
+            .end((err, res) => {
+                should.not.exist(err);
+
+                res.should.have.status(200);
+                res.body.should.be.eql(response);
+
+                done();
+            });
+    });
+
+    it('should return same sent object for lenddo multiple verification result', function (done) {
+        this.timeout(5 * 1000);
+        let payload = {
+            client_id:"12345678-78979877979",
+            event:"application_multiple_verification_complete",
+            result:{
+                whatever:"whatever"
+            }
+        };
+
+        let response = {
+            multipleVerificationData : payload
+        };
+
+        chai.request(server)
+            .post('/lenddo')
+            .set('Content-Type','application/x-www-form-urlencoded')
+            .send(payload)
+            .end((err, res) => {
+                should.not.exist(err);
+
+                res.should.have.status(200);
+                res.body.should.be.eql(response);
+
+                done();
+            });
+    });
 
 
 
