@@ -30,3 +30,5 @@ app.use("*", (req, res) => {
 app.listen(port, () => {
     console.log('We are live on ' + port);
 });
+
+module.exports = app;

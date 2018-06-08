@@ -6,27 +6,84 @@ process.env.DB_USER = 'lenddo@lenddo-test';
 process.env.DB_PASSWORD = 'Lendo123';
 process.env.DB_NAME = 'lenddo';
 
+const server = require('../app.js');
 const chai = require('chai');
-const request = require('supertest');
+const chaiHttp = require('chai-http');
+
 const should = chai.should();
-// const chaiHttp = require('chai-http');
-// chai.use(chaiHttp);
 
-require = require('really-need');
+chai.use(chaiHttp);
 
+describe('#GET /lenddo/status', () => {
 
-describe('Lenddo API integration tests', () => {
-    var server;
-    beforeEach(() => {
-        server = require('../../app.js', { bustCache: true });
+    it('should GET the API status', function (done) {
+        chai.request(server)
+            .get('/lenddo/status')
+            .end((err, res) => {
+                should.not.exist(err);
+
+                res.should.have.status(200);
+                res.text.should.be.eql('Lenddo API locked and loaded');
+
+                done();
+            });
     });
-    afterEach((done)  => {
-        server.close(done);
+});
+
+
+describe('#POST /lenddo', () => {
+    //var sandbox;
+    // beforeEach(function () {
+    //     this.sandbox = sinon.sandbox.create()
+    // });
+    //
+    // afterEach(function () {
+    //     this.sandbox.restore()
+    // });
+
+    it('should queue lenddo score result', function (done) {
+        this.timeout(10000);
+        let result = {
+            client_id:"45784684-78979877979",
+            event:"scoring_complete",
+            result:{
+                score:'500'
+            }
+        };
+
+        chai.request(server)
+            .post('/lenddo')
+            .set('Content-Type','application/x-www-form-urlencoded')
+            .send(result)
+            .end((err, res) => {
+                should.not.exist(err);
+
+                res.should.have.status(200);
+
+                console.log('score handler body', res.body);
+                console.log('score handler text', res.text);
+
+                done();
+            });
+
     });
 
-    it('#GET /lenddo/status ', (done) => {
-        request(server)
-            .get('/lenddo/staus')
-            .expect(200, done);
-    });
+    // it('should do nothing on lenddo verification result', (done) => {
+    //     done();
+    // });
+    //
+    // it('should do nothing on lenddo decision result', (done) => {
+    //     done();
+    // });
+    //
+    // it('should do nothing on lenddo feature result', (done) => {
+    //     done();
+    // });
+    //
+    // it('should do nothing on lenddo multiple verification result', (done) => {
+    //     done();
+    // });
+
+
+
 });
