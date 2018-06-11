@@ -33,4 +33,4 @@ const getEncryptedDni = (dni) => {
     return sum.digest('hex');
 };
 
-module.exports = scoreHandler;
+module.exports = {scoreHandler, _getCustomerDni: getCustomerDni, _getEncryptedDni: getEncryptedDni};

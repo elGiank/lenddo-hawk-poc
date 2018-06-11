@@ -1,3 +1,5 @@
+const connection = require('./connection');
+
 class LenddoQueue {
     constructor(dni, score) {
         this.dni_encrypted = dni;
@@ -7,7 +9,7 @@ class LenddoQueue {
 
 class LenddoQueueRepository {
     constructor(db) {
-        this.db = db;
+        this.db = db || connection;
     }
 
     save(lenddoQueue) {
