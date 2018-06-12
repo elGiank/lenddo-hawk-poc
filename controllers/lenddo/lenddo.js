@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const isProductionMode = require('../../lib/isProductionMode');
 const Queuer = require('../../lib/strategys/queuer');
-const ScoreHandler = require('./scoreHandler').scoreHandler;
+const ScoreHandler = require('./scoreHandler').ScoreHandler;
 const VerificationHandler = require('./verificationHandler');
 const DecisionHandler = require('./decisionHandler');
 const FeaturesHandler = require('./featuresHandler');
@@ -15,11 +15,11 @@ router
     .post('/', (req, res) => {
         let data = req.body;
         let strategies = [
-            new Queuer(ScoreHandler),
-            new Queuer(VerificationHandler),
-            new Queuer(DecisionHandler),
-            new Queuer(FeaturesHandler),
-            new Queuer(MultipleVerificationHandler)
+            new Queuer(new ScoreHandler),
+            new Queuer(new VerificationHandler),
+            new Queuer(new DecisionHandler),
+            new Queuer(new FeaturesHandler),
+            new Queuer(new MultipleVerificationHandler)
         ];
 
         let strategy = strategies.find((strategy) => {

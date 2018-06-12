@@ -1,21 +1,24 @@
 const LenddoQueueRepository = require('../../models/lenddoQueue').LenddoQueueRepository;
 const LenddoQueue =  require('../../models/lenddoQueue').LenddoQueue;
 const crypto = require('crypto');
-const db = require('../../models/connection');
 
 
-const scoreHandler = {
-    isApplicable: (event) => {
+class ScoreHandler {
+    constructor(repository) {
+        this.repository = repository || new LenddoQueueRepository();
+    }
+
+    isApplicable (event) {
         return event === 'scoring_complete';
-    },
-    queue: (scoreData) => {
+    }
+    queue (scoreData) {
         let encryptedDni = getEncryptedDni(getCustomerDni(scoreData.client_id));
         let score = scoreData.result.score;
         let scoreResult = new LenddoQueue(encryptedDni, score);
 
-        return new LenddoQueueRepository(db).save(scoreResult);
+        return this.repository.save(scoreResult);
     }
-};
+}
 
 const getCustomerDni = (clientId) => {
     // assumed clientId Formatt: 12345678-78979877979
@@ -33,4 +36,4 @@ const getEncryptedDni = (dni) => {
     return sum.digest('hex');
 };
 
-module.exports = {scoreHandler, _getCustomerDni: getCustomerDni, _getEncryptedDni: getEncryptedDni};
+module.exports = {ScoreHandler, _getCustomerDni: getCustomerDni, _getEncryptedDni: getEncryptedDni};

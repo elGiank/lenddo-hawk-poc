@@ -5,9 +5,8 @@ process.env.SALT = 'test';
 const should = require('chai').should();
 const crypto = require('crypto');
 const sinon = require('sinon');
-const mockMysql = sinon.mock(require('mysql'));
 
-const {scoreHandler, _getCustomerDni, _getEncryptedDni } = require('../controllers/lenddo/scoreHandler');
+const {ScoreHandler, _getCustomerDni, _getEncryptedDni } = require('../controllers/lenddo/scoreHandler');
 
 describe('Score Result Handler', () => {
     it('should return the DNI from the applicationId', function (done) {
@@ -36,30 +35,42 @@ describe('Score Result Handler', () => {
 
         done();
     });
-    //
-    // it('should queue a new socre result', function (done) {
-    //     this.timeout(5 * 1000);
-    //     mockMysql.expects('createConnection').returns({
-    //         query: (query, vars, callback) => {
-    //             callback(null, {affectedRows: 1});
-    //         }
-    //     });
-    //
-    //     let scoreData = {
-    //         "client_id":"your_APPLICATION_ID_123",
-    //         "event":"scoring_complete",
-    //         "result":{
-    //             "score":"687"
-    //         }
-    //     };
-    //
-    //     scoreHandler.queue(scoreData).then((success) => {
-    //         success.should.be.eql(true);
-    //         done();
-    //     });
-    //
-    //     mockMysql.restore();
-    //
-    // });
+
+    it('should queue a new score result', function (done) {
+
+        let fakeLenddoQueueRepository = {
+            save: function (lenddoQueue) {
+                return new Promise((resolve) => {
+                    resolve(true)
+                });
+            }
+        };
+
+        let scoreData = {
+            "client_id": "12345678-78979877979",
+            "event": "scoring_complete",
+            "result": {
+                "score": "444"
+            }
+        };
+
+        let scoreHandler = new ScoreHandler(fakeLenddoQueueRepository);
+        let saveSpy = sinon.spy(fakeLenddoQueueRepository, 'save');
+        let queueSpy = sinon.spy(scoreHandler, 'queue');
+
+
+        scoreHandler
+            .queue(scoreData)
+            .then((success) => {
+
+                sinon.assert.calledOnce(saveSpy);
+                sinon.assert.calledOnce(queueSpy);
+                success.should.be.eql(true);
+
+                done();
+            });
+
+
+    });
 
 });

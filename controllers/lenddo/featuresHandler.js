@@ -1,12 +1,12 @@
-const featuresHandler = {
-    isApplicable: (event) => {
+class FeaturesHandler {
+    isApplicable (event) {
         return event === 'application_features_complete';
-    },
-    queue: (featuresData) => {
+    }
+    queue (featuresData) {
         return new Promise((resolve) => {
             resolve({featuresData: featuresData});
         });
     }
-};
+}
 
-module.exports = featuresHandler;
+module.exports = FeaturesHandler;

@@ -1,12 +1,12 @@
-const decisionHandler = {
-    isApplicable: (event) => {
+class DecisionHandler {
+    isApplicable (event) {
         return event === 'application_decision_complete';
-    },
-    queue: (decisionData) => {
+    }
+    queue (decisionData) {
         return new Promise((resolve) => {
             resolve({decisionData: decisionData});
         });
     }
-};
+}
 
-module.exports = decisionHandler;
+module.exports = DecisionHandler;

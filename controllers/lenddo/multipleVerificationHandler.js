@@ -1,12 +1,12 @@
-const multipleVerificationHandler = {
-    isApplicable: (event) => {
+class MultipleVerificationHandler {
+    isApplicable (event) {
         return event === 'application_multiple_verification_complete';
-    },
-    queue: (multipleVerificationData) => {
+    }
+    queue (multipleVerificationData) {
         return new Promise((resolve) => {
             resolve({multipleVerificationData: multipleVerificationData});
         });
     }
-};
+}
 
-module.exports = multipleVerificationHandler;
+module.exports = MultipleVerificationHandler;
