@@ -14,24 +14,15 @@ const hawkMiddleware = (req, res, next) => {
             .authenticate(request, credentials)
             .then((auth) => {
 
-                const payload = 'accepted';
-                const headers = {'Content-Type': 'text/plain'};
+                const header = Hawk.server.header(auth.credentials, auth.artifacts);
+                const headers = {'Server-Authorization' : header};
 
-                // Generate Server-Authorization response header
-                const header = Hawk.server.header(
-                    auth.credentials,
-                    auth.artifacts, {
-                        payload,
-                        contentType: headers['Content-Type']
-                    });
-                headers['Server-Authorization'] = header;
-
-                res.set(headers);//set the response headers for the future response.
+                res.set(headers); //set the response headers for the further use.
 
                 next();
             })
             .catch((err) => {
-                res.status(401).send(isProductionEnv ? undefined : err);
+                res.status(401).end(isProductionEnv ? undefined : err);
             });
     }
 };
@@ -49,7 +40,7 @@ const getRequestForHawk = (nodeRequest) => {
 };
 
 const isSecurityEnabled = () => {
-    return process.env.HAWK_ENABLED || true;
+    return process.env.HAWK_ENABLED || false; //TODO: turn this to true en production
 };
 
 module.exports = hawkMiddleware;

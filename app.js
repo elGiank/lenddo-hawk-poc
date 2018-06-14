@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
 const payloadValidator = require('./middleware/payloadValidator/payloadValidator');
+const hawkMiddleware = require('./middleware/hawk');
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -17,6 +18,7 @@ app.use(methodOverride());
 app.use(cors());
 
 //Custom middlewares
+app.post('/lenddo', hawkMiddleware);
 app.post('/lenddo', payloadValidator);
 
 //Routes
