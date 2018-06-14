@@ -18,7 +18,7 @@ app.use(methodOverride());
 app.use(cors());
 
 app.use((req, res, next) => {
-    console.log(`[request in] ${new Date().toLocaleString('es-pe')} ${req.hostname} ${req.originalUrl} ${req.method} ${req.status} ${req.headers} ${req.body}` );
+    console.log(`[request in] \n date: ${new Date().toLocaleString('es-pe')} \n hostname: ${req.hostname} \n original url: ${req.originalUrl} \n http verb: ${req.method} \n headers ${JSON.stringify(req.headers)} \n body: ${JSON.stringify(req.body)}` );
     next();
 });
 
@@ -31,7 +31,7 @@ app.post('/lenddo', payloadValidator);
 app.use('/lenddo', lenddoRoutes);
 
 app.use((req, res, next) => {
-    console.log(`[response out] ${new Date().toLocaleString('es-pe')} ${res.hostname} ${res.status} ${res.headers} ${res.body}` );
+    console.log(`[response out] \n ${new Date().toLocaleString('es-pe')} \n hostname: ${res.hostname} \n headers: ${JSON.stringify(req.headers)} \n body: ${JSON.stringify(req.body)}` );
     next();
 });
 
