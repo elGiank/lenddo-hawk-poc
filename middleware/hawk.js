@@ -1,6 +1,6 @@
 const Hawk = require('hawk');
 const credentials = require('../lib/lenddoCredentials');
-const isProductionEnv = require('lib/isProductionEnv');
+const isProductionEnv = require('../lib/isProductionEnv');
 
 const hawkMiddleware = (req, res, next) => {
 
